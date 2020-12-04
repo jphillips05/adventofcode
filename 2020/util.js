@@ -2,7 +2,10 @@ const fs = require('fs')
 
 module.exports = {
     ReadFile: (fileName, delimiter) => {
-        return fs.readFileSync(`./${fileName}`, 'utf8').split('\n');
+        if(!delimiter) {
+            delimiter = '\n'
+        }
+        return fs.readFileSync(`./${fileName}`, 'utf8').split(delimiter);
     },
     AddsUp: (data, target) => {
         

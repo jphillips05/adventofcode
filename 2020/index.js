@@ -2,9 +2,38 @@ const Day2 = require('./day2')
 const util = require('./util.js')
 const Dat3Slope = require('./day3Slope');
 const day3Slope = require('./day3Slope');
+const passport = require('./day4Passport')
 
-day3b()
 
+day4b()
+
+function day4b() {
+    let data = util.ReadFile('/data/Day4.txt', '\n\n');
+    let count = 0
+    data.forEach(row => {
+        let p = new passport()
+        p.build(row.split(/\n| /))
+        if(p.isValid()) {
+            count ++
+        }
+    })
+
+    console.log(count)
+
+}
+
+function day4a() {
+    let data = util.ReadFile('/data/Day4.txt', '\n\n');
+    let count = 0
+    data.forEach(row => {
+        let p = row.split(/\n| /)
+        if(day4Passport.IsValidPassport(p)) {
+            count ++
+        }
+    })
+
+    console.log(count)
+}
 
 function day3b() {
     let data = util.ReadFile('/data/Day3.txt');
