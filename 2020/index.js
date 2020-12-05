@@ -5,7 +5,60 @@ const day3Slope = require('./day3Slope');
 const passport = require('./day4Passport')
 
 
-day4b()
+day5b()
+
+//676
+function day5b() {
+    let data = util.ReadFile('/data/Day5.txt');
+
+    let seats = [];
+        
+    data.forEach(row => {
+        let d = row
+            .replace(/B/gi, 1)
+            .replace(/F/gi, 0)
+            .replace(/R/gi, 1)
+            .replace(/L/gi, 0);
+        seats.push(parseInt(d, 2))
+
+    });
+
+    seats = seats.sort((a,b)=>a-b)
+
+    for(let i = seats[0]; i < seats.length-1; i++) {
+        if(seats[i] + 1 === seats[i+1]) {
+            continue
+        }
+
+        console.log(seats[i]+1)
+    }
+
+}
+
+
+function day5a() {
+    let data = util.ReadFile('/data/Day5.txt');
+
+    let ceil = 0;
+        
+    data.forEach(row => {
+        let d = row
+            .replace(/B/gi, 1)
+            .replace(/F/gi, 0)
+            .replace(/R/gi, 1)
+            .replace(/L/gi, 0);
+        let num = parseInt(d, 2)
+        
+
+        if(num > ceil) {
+            ceil = num
+        }
+
+    })
+
+    console.log(ceil)
+
+}
 
 function day4b() {
     let data = util.ReadFile('/data/Day4.txt', '\n\n');
