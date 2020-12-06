@@ -1,7 +1,5 @@
-const Passport = require('./day4Passport')
-const jestConfig = require('./jest.config')
-const mockData = 'eyr:2024 pid:662406624 hcl:#cfa07d byr:1947 iyr:2015 ecl:amb hgt:150cm'.split(/\n| /)
-jest.mock('./day4Passport')
+import {expect, test, describe, beforeAll} from '@jest/globals';
+import { Passport } from './day4Passport'
 
 
 describe('passport', () => {

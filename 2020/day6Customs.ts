@@ -1,17 +1,17 @@
-module.exports = {
+export class Customs {
     
-    countYes: (chars) => {
-        let yesArr = []
-        for(char of chars) {
+    static countYes = (chars: string): number => {
+        let yesArr: string[] = []
+        for(let char of chars) {
             yesArr[char] = 1
         }
         return Object.keys(yesArr).length
-    },
+    }
 
-    countAllYes: (charsArr) => {
+    static countAllYes = (charsArr: string[]): number => {
         let yesArr = []
         charsArr.forEach(chars => {
-            for(char of chars) {
+            for(let char of chars) {
                 yesArr[char] = (yesArr[char] || 0) + 1
             }
         })

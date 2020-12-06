@@ -26,11 +26,9 @@
 //     }
 // }
 
-module.exports = class Passport {
+export class Passport {
 
-    constructor() {
-        this.parts = []
-    }
+    parts:any = []
 
     build(data) {
         data.forEach(o => {
@@ -102,6 +100,7 @@ module.exports = class Passport {
 
     isValidHeightParts(heightParts) {
         return  heightParts && 
+                heightParts.groups &&        
                 heightParts.groups.uom && 
                 heightParts.groups.value && 
                 !isNaN(heightParts.groups.value)
