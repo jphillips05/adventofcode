@@ -23,3 +23,30 @@ module.exports = {
     countInstanceOf: (letter, arr) => arr.reduce((counter,current) => (letter === current ? counter + 1 : counter),0)
 
 }
+
+// function day2b() {
+//     let count = 0
+//     util.ReadFile('./data/Day2.txt')
+//         .forEach(row => {
+//             let model = Day2.buildModel(row)
+//             if(Day2.isValidIndexCount(model.Letter, model.Password, model.Min, model.Max)) {
+//                 count ++
+//             }
+//         })
+
+//     console.log(count);
+// }
+
+// function day2a() {
+//     let count = 0
+//     util.ReadFile('./data/Day2.txt')
+//         .forEach(row => { 
+//             let model = Day2.buildModel(row)
+//             let instanceNum = Day2.countInstanceOf(model.Letter, model.Password)
+//             if(Day2.isValidCount(instanceNum, model.Min, model.Max)) {
+//                 count ++
+//             }
+//         })
+    
+//     console.log(count)
+// }

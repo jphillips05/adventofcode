@@ -137,3 +137,31 @@ module.exports = class Passport {
     }
 
 }
+
+// function day4b() {
+//     let data = util.ReadFile('/data/Day4.txt', '\n\n');
+//     let count = 0
+//     data.forEach(row => {
+//         let p = new passport()
+//         p.build(row.split(/\n| /))
+//         if(p.isValid()) {
+//             count ++
+//         }
+//     })
+
+//     console.log(count)
+
+// }
+
+// function day4a() {
+//     let data = util.ReadFile('/data/Day4.txt', '\n\n');
+//     let count = 0
+//     data.forEach(row => {
+//         let p = row.split(/\n| /)
+//         if(day4Passport.IsValidPassport(p)) {
+//             count ++
+//         }
+//     })
+
+//     console.log(count)
+// }
