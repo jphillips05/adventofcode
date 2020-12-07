@@ -28,7 +28,7 @@
 
 export class Passport {
 
-    parts:any = []
+    parts: {[key: string]: number}
 
     build(data) {
         data.forEach(o => {
@@ -37,7 +37,7 @@ export class Passport {
         });
     }
 
-    isValid() {
+    isValid(): boolean {
         return  this.isValidBirthYear(this.parts['byr'])
                 && this.isValidIssueYear(this.parts['iyr'])
                 && this.isValidExpirationYear(this.parts['eyr'])
@@ -48,34 +48,29 @@ export class Passport {
                 && this.isValidCountryId(this.parts['cid'])
     }
 
-    getData() {
-        console.log(this.parts)
-        return this.parts
-    }
-
     //byr
-    isValidBirthYear(year) {
+    isValidBirthYear(year): boolean {
         return  year &&
                 year >=1920 && 
                 year <= 2002
     }
 
     //iyr
-    isValidIssueYear(year) {
+    isValidIssueYear(year): boolean {
         return  year &&
                 year >= 2010 && 
                 year <= 2020
     }
 
     //eyr
-    isValidExpirationYear(year) {
+    isValidExpirationYear(year): boolean {
         return  year &&
                 year >= 2020 &&
                 year <= 2030
     }
 
     //hgt
-    isValidHeight(height) {
+    isValidHeight(height): boolean {
         if(!height) return false
         
         if(!this.isHeightValidStart(height)) return false
@@ -90,7 +85,7 @@ export class Passport {
 
     }
 
-    isValidHeightWithUom(heightParts) {
+    isValidHeightWithUom(heightParts): boolean {
         if(heightParts.groups.uom === 'cm') {
             return this.isValidHeightCm(heightParts.groups.value)
         }
@@ -98,7 +93,7 @@ export class Passport {
         return this.isValidHeightIn(heightParts.groups.value)
     }
 
-    isValidHeightParts(heightParts) {
+    isValidHeightParts(heightParts): boolean {
         return  heightParts && 
                 heightParts.groups &&        
                 heightParts.groups.uom && 
@@ -106,32 +101,32 @@ export class Passport {
                 !isNaN(heightParts.groups.value)
     }
 
-    isHeightValidStart(height) {
+    isHeightValidStart(height): boolean {
         return !isNaN(height.substring(0,1))
     }
 
-    isValidHeightCm(height) {
+    isValidHeightCm(height): boolean {
         return height >= 150 && height <= 193
     }
 
-    isValidHeightIn(height) {
+    isValidHeightIn(height): boolean {
         return height >= 59 && height <= 76
     }
 
-    isValidHairColor(color) {
+    isValidHairColor(color): boolean {
         return color && color.search(/^#[0-9a-f]{6}$/) > -1
     }
 
-    isValidEyeColor(color) {
+    isValidEyeColor(color): boolean {
         const valid = ['amb','blu','brn','gry','grn','hzl','oth']
         return color && valid.indexOf(color) > -1
     }
 
-    isValidPassportId(id) {
+    isValidPassportId(id): boolean {
         return id && id.search(/^[0-9]{9}$/) > -1
     }
 
-    isValidCountryId(cid) {
+    isValidCountryId(cid): boolean {
         return true
     }
 

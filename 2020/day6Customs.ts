@@ -19,3 +19,23 @@ export class Customs {
         return Object.values(yesArr).filter(o => o == charsArr.length).length
     }
 }
+
+
+// function day6b() {
+//     let count:number = 0
+//     Util.ReadFile('/data/Day6.txt', '\n\n').forEach((row: string) => {
+//         let charsArr:string[] = row.split('\n')
+//         count = count + Customs.countAllYes(charsArr)
+//     });
+
+//     console.log(count)
+
+// }
+
+// function day6a() {
+//     let count = 0
+//     Util.ReadFile('/data/Day6.txt', '\n\n').forEach(row => {
+//         let chars = row.split('\n').join('')
+//         count = count + Customs.countYes(chars)
+//     });
+// }
