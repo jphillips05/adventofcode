@@ -13,6 +13,14 @@ export class Bags {
         return bagString.substring(0, bagString.lastIndexOf(' '))
     }
 
+    static BuildChildModel(name: string) {
+        let formatArr = name.split(' ')
+        let value = formatArr.shift();
+        formatArr.pop()
+        if(isNaN(parseInt(value))) return [{}] 
+        return { key: formatArr.join(' '), value: parseInt(value) || 0 }
+    }
+
     static BuildBagArray = (data) => {
         let bagHash = []
         data.forEach(row => {
@@ -29,16 +37,56 @@ export class Bags {
         return bagHash;
     }
 
+    static BuildBagFullArray(data) {
+        let bagHash = []
+        data.forEach(row => {
+            row.split(/ bags contain |, /)
+                .forEach((column, idx, arr) => {
+                    if(idx === 0) {
+                        bagHash[column] = [];
+                    } else {
+                        if(column !== 'no other bags.') {
+                            bagHash[arr[0]].push(this.BuildChildModel(column))
+                        }
+                    }
+                });
+        })
+        console.log(bagHash)
+        return bagHash;
+    }
+
     static CountBag(bagName: string, data, keys?) {
         Object.keys(data).forEach(key => {
             if(data[key].indexOf(bagName)> -1) {
                 if(!keys) keys = []
                 if(keys.indexOf(key) === -1) keys.push(key)
-                console.log(`${bagName} in =>`, key)
                 this.CountBag(key, data, keys);
             }
         });
 
         return keys.length
+    }
+
+   
+    static CountBagsIn(bagName: string, data) {
+        if(!data[bagName]) return
+        let count = 0;
+        data[bagName].forEach(bag => {
+            count = count + bag.value
+            let val = 0
+            this.GetNextNode(bag.key, data).forEach(n => {
+                val = val + n.value
+            })
+
+            console.log(bag.value)
+            count = count + (val*bag.value)
+            
+        });
+        
+    }
+
+    static GetNextNode(name, data) {
+        if(!data[name]) return
+        return data[name]
     }
 }

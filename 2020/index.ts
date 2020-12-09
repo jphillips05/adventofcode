@@ -1,5 +1,21 @@
 import { Util } from './Util'
 import { Bags } from './day7Bags'
+import { Game } from './day8Game'
+
+let testdata = 
+`nop +0
+acc +1
+jmp +4
+acc +3
+jmp -3
+acc -99
+acc +1
+jmp -4
+acc +6`
+
+
+// new Game(Util.ReadFile('/data/Day8.txt'));
+new Game(testdata.split('\n'));
 
 let testData = 
 `light red bags contain 1 bright white bag, 2 muted yellow bags.
@@ -12,6 +28,22 @@ vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
 faded blue bags contain no other bags.
 dotted black bags contain no other bags.`
 
+let test2 = 
+`shiny gold bags contain 2 dark red bags.
+dark red bags contain 2 dark orange bags.
+dark orange bags contain 2 dark yellow bags.
+dark yellow bags contain 2 dark green bags.
+dark green bags contain 2 dark blue bags.
+dark blue bags contain 2 dark violet bags.
+dark violet bags contain no other bags.`
+
+//day7b()
+
+function day7b() {
+    let data = testData.split('\n')
+    let bagHash = Bags.BuildBagFullArray(data)
+    Bags.CountBagsIn('shiny gold', bagHash)
+}
 
 //378
 function day7a() {
