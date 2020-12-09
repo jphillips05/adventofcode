@@ -91,3 +91,20 @@ export class Game {
         this.numVal = 0
     }
 }
+
+// let testdata = 
+// `nop +0
+// acc +1
+// jmp +4
+// acc +3
+// jmp -3
+// acc -99
+// acc +1
+// jmp -4
+// acc +6`
+
+
+// //switch last jump to nop for success
+
+// new Game(Util.ReadFile('/data/Day8.txt'));
+// // new Game(testdata.split('\n'));
