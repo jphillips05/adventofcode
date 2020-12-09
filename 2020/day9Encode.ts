@@ -1,3 +1,5 @@
+import { cursorTo } from "readline"
+
 export class Encode {
     
     data = []
@@ -12,10 +14,34 @@ export class Encode {
         this.end = preamble
         this.preamble = preamble
 
-        this.run()
+        let error = this.getError()
+        this.start = 0
+        this.end = 1
+        this.findContig(error)
     }
 
-    run = () => {
+    findContig = (erroNum) => {
+        this.processing = true
+        let data = []
+        while(this.processing) {
+            data = this.getDataSet()
+
+            if(this.sum(data) < erroNum) {
+                this.end ++
+            } else if(this.sum(data) > erroNum) {
+                this.start ++
+                this.end = this.start + 1
+            } else {
+                this.processing = false
+            }
+        }
+
+        let set = data.sort((a,b) => a-b)
+        console.log(`answer => ${set[0] + set[set.length-1]}`)
+
+    }
+
+    getError = (): number => {
         this.processing = true
         while(this.processing) {
             let data = this.getDataSet()
@@ -25,6 +51,7 @@ export class Encode {
         }
 
         console.log(`invalid => ${this.erroNum}`)
+        return this.erroNum
 
     }
 
@@ -45,6 +72,8 @@ export class Encode {
         this.erroNum = next
         this.processing = false
     }
+
+    sum = (data: Array<number>): number => data.reduce((rev, cur) => rev += cur)
 
     peek = () => parseInt(this.data[this.end])
 

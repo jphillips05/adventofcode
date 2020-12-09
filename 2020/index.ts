@@ -24,7 +24,7 @@ let testData =
 309
 576`
 
-//new Encode(5, testData.split('\n'))
+// new Encode(5, testData.split('\n'))
 new Encode(25, Util.ReadFile('/data/Day9.txt'))
 
 
