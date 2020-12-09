@@ -14,8 +14,10 @@ jmp -4
 acc +6`
 
 
-// new Game(Util.ReadFile('/data/Day8.txt'));
-new Game(testdata.split('\n'));
+//switch last jump to nop for success
+
+new Game(Util.ReadFile('/data/Day8.txt'));
+// new Game(testdata.split('\n'));
 
 let testData = 
 `light red bags contain 1 bright white bag, 2 muted yellow bags.

@@ -1,57 +1,69 @@
 export class Game {
     numVal: number = 0 
     data = []
-    idx: number = 1
-    continue: boolean = true
+    idx: number = 0
     checked = []
-    flip = -1
+    switchIdxs = []
+    running = false
+    isSolution = false
 
     constructor(data) {
         this.data = this.transformData(data)
-        //for(let i = 0; i < this.data.length; i++) {
-            this.run()
-        //}
+        for(let i = 0; i < this.switchIdxs.length; i++) {
+            this.run(i)
+            this.reset()
+        }
     }
 
-    transformData = (data)  => data.map(row => row.split(' '))
+    transformData = (data)  => { 
+        return data.map((row, idx) => { 
+            let r = row.split(' ') 
+            if(r[0] === 'nop' || r[0] === 'jmp') {
+                this.switchIdxs.push(idx)
+            }
+            return  r
+        })
+    }
 
 
     jmp = (value:string) => {
         let num = new Number(value).valueOf()
-        this.idx += num
+        this.idx = this.idx + num
     }
 
     acc = (value: string) => {
         let num = new Number(value).valueOf()
-        this.numVal += num
-        this.idx ++
+        this.numVal = this.numVal + num
+        this.idx = this.idx + 1
     }
 
     nop = () => { 
-        this.idx ++
+        this.idx = this.idx + 1
     } 
 
-    run = () => {
-        while(this.checked.indexOf(this.idx) === -1){
-            this.exec()
+    run = (runId) => {
+        this.running = true
+        while(this.idx < this.data.length && this.running && !this.isSolution){
+            this.exec(runId)
         }
 
-        console.log(`finish => ${this.numVal}`)
+        this.isSolution = this.idx === this.data.length
+        if(this.isSolution) {
+            console.log(`finish => ${this.numVal}, isLastLine => ${this.idx === this.data.length}`)
+        }
 
     }
 
-    exec = () => {
+    exec = (runId) => {
 
         if(this.checked.indexOf(this.idx) > -1) {
+            this.running = false
             return
         }
 
         this.checked.push(this.idx)
 
-        let action = this.getAction(this.data[this.idx][0])
-        // if(action !== this.data[this.idx][0] && this.idx > this.flip) {
-        //     this.flip = this.idx
-        // }
+        let action = this.getAction(this.data[this.idx][0], runId) 
         
         switch(action) {
             case 'nop': return this.nop()
@@ -60,15 +72,22 @@ export class Game {
         }
     }
 
-    getAction = (action) => {
-        return action
-        if(action === 'nop') return 'jpm'
-        if(action === 'jmp') return 'nop'
+    getAction = (action, runId) => {
+        //if not in switch check array
+        if(this.switchIdxs.indexOf(this.idx) === -1) return action
+        
+        //if runId for switch check
+        //here we check to see which of the checks we need to change
+        if(this.switchIdxs[runId] === this.idx) {
+            if(action === 'nop') return 'jmp'
+            if(action === 'jmp') return 'nop'
+        }
         return action
     }
 
     reset = () => {
         this.idx = 0
         this.checked = []
+        this.numVal = 0
     }
 }
