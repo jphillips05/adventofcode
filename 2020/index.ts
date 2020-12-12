@@ -1,31 +1,30 @@
 import { Util } from './Util'
-import { Bags } from './day7Bags'
-import { Encode } from './day9Encode'
+import { Seats } from './day11Seats'
 
 let testData = 
-`35
-20
-15
-25
-47
-40
-62
-55
-65
-95
-102
-117
-150
-182
-127
-219
-299
-277
-309
-576`
+`L.LL.LL.LL
+LLLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLLL
+L.LLLLLL.L
+L.LLLLL.LL`
 
-// new Encode(5, testData.split('\n'))
-new Encode(25, Util.ReadFile('/data/Day9.txt'))
+// let testData = s.buildArray( 
+// `L##
+// L##
+// LL#`)
+    
+
+
+let s = new Seats()
+//let data = s.buildArray(Util.ReadFile('/data/Day11.txt', false))
+let data = s.buildArray(testData)
+//console.log(s.getNewState(data, 1,0))
+s.runFullSet(data)
 
 
 // let testData = 
@@ -50,72 +49,72 @@ new Encode(25, Util.ReadFile('/data/Day9.txt'))
 
 //day7b()
 
-function day7b() {
-    let data = testData.split('\n')
-    let bagHash = Bags.BuildBagFullArray(data)
-    Bags.CountBagsIn('shiny gold', bagHash)
-}
+// function day7b() {
+//     let data = testData.split('\n')
+//     let bagHash = Bags.BuildBagFullArray(data)
+//     Bags.CountBagsIn('shiny gold', bagHash)
+// }
 
-//378
-function day7a() {
-    let data = Util.ReadFile('/data/Day7.txt');
-    let bagHash = Bags.BuildBagArray(data)
-    let count = Bags.CountBag('shiny gold', bagHash)
+// //378
+// function day7a() {
+//     let data = Util.ReadFile('/data/Day7.txt');
+//     let bagHash = Bags.BuildBagArray(data)
+//     let count = Bags.CountBag('shiny gold', bagHash)
 
-    console.log(count)
+//     console.log(count)
 
-}
+// }
 
 
 //676
-function day5b() {
-    let data = Util.ReadFile('/data/Day5.txt');
+// function day5b() {
+//     let data = Util.ReadFile('/data/Day5.txt');
 
-    let seats = [];
+//     let seats = [];
         
-    data.forEach(row => {
-        let d = row
-            .replace(/B/gi, '1')
-            .replace(/F/gi, '0')
-            .replace(/R/gi, '1')
-            .replace(/L/gi, '0');
-        seats.push(parseInt(d, 2))
+//     data.forEach(row => {
+//         let d = row
+//             .replace(/B/gi, '1')
+//             .replace(/F/gi, '0')
+//             .replace(/R/gi, '1')
+//             .replace(/L/gi, '0');
+//         seats.push(parseInt(d, 2))
 
-    });
+//     });
 
-    seats = seats.sort((a,b)=>a-b)
+//     seats = seats.sort((a,b)=>a-b)
 
-    for(let i = seats[0]; i < seats.length-1; i++) {
-        if(seats[i] + 1 === seats[i+1]) {
-            continue
-        }
+//     for(let i = seats[0]; i < seats.length-1; i++) {
+//         if(seats[i] + 1 === seats[i+1]) {
+//             continue
+//         }
 
-        console.log(seats[i]+1)
-    }
+//         console.log(seats[i]+1)
+//     }
 
-}
+// }
 
 
-function day5a() {
-    let data = Util.ReadFile('/data/Day5.txt');
+// function day5a() {
+//     let data = Util.ReadFile('/data/Day5.txt');
 
-    let ceil = 0;
+//     let ceil = 0;
         
-    data.forEach(row => {
-        let d = row
-            .replace(/B/gi, '1')
-            .replace(/F/gi, '0')
-            .replace(/R/gi, '1')
-            .replace(/L/gi, '0');
-        let num = parseInt(d, 2)
+//     data.forEach(row => {
+//         let d = row
+//             .replace(/B/gi, '1')
+//             .replace(/F/gi, '0')
+//             .replace(/R/gi, '1')
+//             .replace(/L/gi, '0');
+//         let num = parseInt(d, 2)
         
 
-        if(num > ceil) {
-            ceil = num
-        }
+//         if(num > ceil) {
+//             ceil = num
+//         }
 
-    })
+//     })
 
-    console.log(ceil)
+//     console.log(ceil)
 
-}
+// }

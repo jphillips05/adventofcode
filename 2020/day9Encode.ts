@@ -78,3 +78,6 @@ export class Encode {
     peek = () => parseInt(this.data[this.end])
 
 }
+
+// new Encode(5, testData.split('\n'))
+//new Encode(25, Util.ReadFile('/data/Day9.txt'))
