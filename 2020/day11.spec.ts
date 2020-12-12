@@ -54,4 +54,13 @@ LLL`
         let arr = seat.buildArray(testData)
         expect(seat.getNewState(arr, 1, 1) === SeatEnum.taken).toBeTruthy()
     })
+
+    test('get next seat', () => {
+let testData = 
+`.............
+.L.L.#.#.#.#.
+.............`
+        let arr = seat.buildArray(testData)
+        expect(seat.getNextSeat(arr,1,1,1,1) === SeatEnum.free).toBeTruthy()
+    })
 })

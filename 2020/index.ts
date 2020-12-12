@@ -11,18 +11,14 @@ L.LLLLL.LL
 ..L.L.....
 LLLLLLLLLL
 L.LLLLLL.L
-L.LLLLL.LL`
-
-// let testData = s.buildArray( 
-// `L##
-// L##
-// LL#`)
-    
+L.LLLLL.LL`    
 
 
 let s = new Seats()
-//let data = s.buildArray(Util.ReadFile('/data/Day11.txt', false))
-let data = s.buildArray(testData)
+//3994
+let data = s.buildArray(Util.ReadFile('/data/Day11.txt', false))
+// let data = s.buildArray(testData)
+// s.getNewState(data, 0, 1)
 //console.log(s.getNewState(data, 1,0))
 s.runFullSet(data)
 
