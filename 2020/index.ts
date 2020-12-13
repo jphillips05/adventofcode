@@ -1,27 +1,19 @@
 import { Util } from './Util'
-import { Seats } from './day11Seats'
+import { NauticalDirection, Position, Instruction } from './day12Nautical'
 
-let testData = 
-`L.LL.LL.LL
-LLLLLLL.LL
-L.L.L..L..
-LLLL.LL.LL
-L.LL.LL.LL
-L.LLLLL.LL
-..L.L.....
-LLLLLLLLLL
-L.LLLLLL.L
-L.LLLLL.LL`    
+// const testData = 
+// `F10
+// N3
+// F7
+// R90
+// F11`
 
+const testData = Util.ReadFile('/data/Day12.txt', false)
+const n = new NauticalDirection()
+const instructions: Instruction[] = n.getInstructions(testData)
+let coords: Position = instructions.reduce((prev, curr) => n.exec(prev, curr), {Facing: 'E', Coords: [0, 0]})
 
-let s = new Seats()
-//3994
-let data = s.buildArray(Util.ReadFile('/data/Day11.txt', false))
-// let data = s.buildArray(testData)
-// s.getNewState(data, 0, 1)
-//console.log(s.getNewState(data, 1,0))
-s.runFullSet(data)
-
+console.log('answer', coords.Coords.reduce((prev, curr) => Math.abs(curr) + prev, 0))
 
 // let testData = 
 // `light red bags contain 1 bright white bag, 2 muted yellow bags.

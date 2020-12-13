@@ -101,21 +101,21 @@ export class Seats {
 
     getNextCoords(x, y, i) {
         switch (i) {
-            case Direction.N:
+            case Nautical.N:
                 return [x, y - 1]
-            case Direction.NE:
+            case Nautical.NE:
                 return [x + 1, y - 1]
-            case Direction.E:
+            case Nautical.E:
                 return [x + 1, y]
-            case Direction.SE:
+            case Nautical.SE:
                 return [x + 1, y + 1]
-            case Direction.S:
+            case Nautical.S:
                 return [x, y + 1]
-            case Direction.SW:
+            case Nautical.SW:
                 return [x - 1, y + 1]
-            case Direction.W:
+            case Nautical.W:
                 return [x - 1, y]
-            case Direction.NW:
+            case Nautical.NW:
                 return [x - 1, y - 1]
         }
     }
@@ -128,7 +128,7 @@ export enum SeatEnum {
     free = 'L'
 }
 
-export enum Direction {
+export enum Nautical {
     N = 0,
     NE = 1,
     E = 2,
@@ -139,3 +139,13 @@ export enum Direction {
     NW = 7
 }
 
+
+
+
+// let s = new Seats()
+// //3994
+// let data = s.buildArray(Util.ReadFile('/data/Day11.txt', false))
+// // let data = s.buildArray(testData)
+// // s.getNewState(data, 0, 1)
+// //console.log(s.getNewState(data, 1,0))
+// s.runFullSet(data)
