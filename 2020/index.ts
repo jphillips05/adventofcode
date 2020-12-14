@@ -1,21 +1,36 @@
 import { Util } from './Util'
-import { NauticalDirection, Position, Instruction } from './day12Nautical'
 
-// const testData = 
-// `F10
-// N3
-// F7
-// R90
-// F11`
+// let testData = 
+// `939
+// 7,13,x,x,59,x,31,19`
 
-//57882
-const testData = Util.ReadFile('/data/Day12.txt', false)
-const n = new NauticalDirection()
-const instructions: Instruction[] = n.getInstructions(testData)
-let coords: Position = instructions.reduce((prev, curr) => n.exec(prev, curr), {Waypoint: [10, -1], Coords: [0, 0]})
-console.log('answer', coords.Coords.reduce((prev, curr) => Math.abs(curr) + prev, 0))
+let testData = Util.ReadFile('/Data/Day13.txt', false)
+let data = testData.split('\n')
+let start = parseInt(data[0])
+let validBus: number[] = data[1].split(',').reduce((prev, curr) => {
+    if(!isNaN(parseInt(curr))) {
+        prev.push(parseInt(curr))
+    }
+    return prev
+}, [])
 
+//runBus(start, validBus)
+function runBus(start, validBus) {
+    let run = true
+    let time = start
+    while(run) {
+        time ++
+        for(let i = 0; i < validBus.length; i++) {
+            if(time%validBus[i]===0) {
+                console.log(`finish => ${(time-start)*validBus[i]}`)
+                run = false
+                break
+            }
+        }
 
+    }
+
+}
 
 // let testData = 
 // `light red bags contain 1 bright white bag, 2 muted yellow bags.

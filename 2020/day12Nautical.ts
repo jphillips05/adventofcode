@@ -98,3 +98,11 @@ export enum Move {
     F, B
 }
 
+// //57882
+// const testData = Util.ReadFile('/data/Day12.txt', false)
+// const n = new NauticalDirection()
+// const instructions: Instruction[] = n.getInstructions(testData)
+// let coords: Position = instructions.reduce((prev, curr) => n.exec(prev, curr), {Waypoint: [10, -1], Coords: [0, 0]})
+// console.log('answer', coords.Coords.reduce((prev, curr) => Math.abs(curr) + prev, 0))
+
+
