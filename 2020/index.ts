@@ -1,18 +1,38 @@
 import { Util } from './Util'
 
 // let testData = 
-// `939
-// 7,13,x,x,59,x,31,19`
+// `0
+// 1789,37,47,1889`
 
 let testData = Util.ReadFile('/Data/Day13.txt', false)
 let data = testData.split('\n')
-let start = parseInt(data[0])
-let validBus: number[] = data[1].split(',').reduce((prev, curr) => {
-    if(!isNaN(parseInt(curr))) {
-        prev.push(parseInt(curr))
+let startTime = 100000000000000 // parseInt(data[0])
+let validBus: any[] = data[1].split(',').map(b => !isNaN(parseInt(b)) ? parseInt(b) : b)
+
+// let validBus: any[] = [7,13,'x','x',59,'x',31,19]
+// let startTime = 1068780
+
+let t = startTime
+while(!checkNextBus(t, 0, validBus)) {
+    t++
+    console.log('running', t)
+}
+
+console.log(`finish => ${t}`)
+
+function checkNextBus(start, busIndex, busList) {
+    if(!busList[busIndex]) return false //if does not exist retur false
+
+    //break
+    if(start%busList[busIndex] === 0 && busIndex === busList.length -1) return true
+
+    if(start%busList[busIndex] === 0 || busList[busIndex] === 'x') {
+        return checkNextBus(start+1, busIndex+1, busList)
     }
-    return prev
-}, [])
+
+    //all false
+    return false
+}
 
 //runBus(start, validBus)
 function runBus(start, validBus) {
