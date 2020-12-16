@@ -1,24 +1,60 @@
 import { Util } from './Util'
 
+let arr: Array<number> = [0,1,5,10,3,12,19]
+let i = 1
+let end = 2020
+let hash: Map<number, number> = new Map()
+arr.slice(0, arr.length-1).forEach(v => hash.set(v, i++))
+
+let n = arr[arr.length-1]
+i ++
+let start = Date.now()
+
+while(i <= end) {
+    if(!hash.get(n)) {
+        hash.set(n, i-1)
+        n = 0
+    } else {
+        let diff = i-1-hash.get(n)
+        hash.set(n, i-1)
+        n = diff
+    }
+    i++
+}
+
+console.log('done', n, Date.now()-start)
+
+
+
+
+
+
+
+
+
+
+
+
+
 // let testData = 
 // `0
 // 1789,37,47,1889`
 
-let testData = Util.ReadFile('/Data/Day13.txt', false)
-let data = testData.split('\n')
-let startTime = 100000000000000 // parseInt(data[0])
-let validBus: any[] = data[1].split(',').map(b => !isNaN(parseInt(b)) ? parseInt(b) : b)
+// let testData = Util.ReadFile('/Data/Day13.txt', false)
+// let data = testData.split('\n')
+// let startTime = 100000000000000 // parseInt(data[0])
+// let validBus: any[] = data[1].split(',').map(b => !isNaN(parseInt(b)) ? parseInt(b) : b)
 
-// let validBus: any[] = [7,13,'x','x',59,'x',31,19]
-// let startTime = 1068780
+// // let validBus: any[] = [7,13,'x','x',59,'x',31,19]
+// // let startTime = 1068780
 
-let t = startTime
-while(!checkNextBus(t, 0, validBus)) {
-    t++
-    console.log('running', t)
-}
+// let t = startTime
+// while(!checkNextBus(t, 0, validBus)) {
+//     t++
+//     console.log('running', t)
+// }
 
-console.log(`finish => ${t}`)
+// console.log(`finish => ${t}`)
 
 function checkNextBus(start, busIndex, busList) {
     if(!busList[busIndex]) return false //if does not exist retur false
