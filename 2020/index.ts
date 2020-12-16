@@ -1,34 +1,61 @@
 import { Util } from './Util'
 
-let arr: Array<number> = [0,1,5,10,3,12,19]
-let i = 1
-let end = 2020
-let hash: Map<number, number> = new Map()
-arr.slice(0, arr.length-1).forEach(v => hash.set(v, i++))
+// let testData = 
+// `class: 1-3 or 5-7
+// row: 6-11 or 33-44
+// seat: 13-40 or 45-50
 
-let n = arr[arr.length-1]
-i ++
-let start = Date.now()
+// your ticket:
+// 7,1,14
 
-while(i <= end) {
-    if(!hash.get(n)) {
-        hash.set(n, i-1)
-        n = 0
-    } else {
-        let diff = i-1-hash.get(n)
-        hash.set(n, i-1)
-        n = diff
+// nearby tickets:
+// 7,3,47
+// 40,4,50
+// 55,2,20
+// 38,6,12`
+
+let testData = Util.ReadFile('/data/Day16.txt', false)
+let data = testData.split('\n\n')
+
+let validRangeVals: Map<string, number[]>
+data[0].split('departure ').forEach(r => {
+    let parts = r.split(':')
+    validRangeVals.set(parts[0], [])
+    
+})
+
+data[0].match(/\d{1,9}-\d{1,9}/ig).forEach(r => {
+    let ra = r.split('-')
+    range(parseInt(ra[0]), parseInt(ra[1])).forEach(c => {
+        if(parseInt(c) && !validRangeVals.includes(parseInt(c))) {
+            validRangeVals.push(parseInt(c))
+        }
+    })
+})
+
+let ticketData = {}
+data.slice(1, data.length).forEach(ticket => {
+    let d = ticket.split(':\n')
+    ticketData[d[0]] = d[1]
+        .split('\n')
+        .map(r => r.split(',').reduce((p,c) => !isNaN(parseInt(c)) && p.push(parseInt(c)) && p, []))
+});
+
+let errArr = 0
+ticketData["nearby tickets"].forEach(r => {
+    for(let i = 0; i < r.length; i++) {
+        if(!validRangeVals.includes(r[i])) {
+            //remove
+        }
     }
-    i++
+})
+
+
+console.log(errArr)
+
+function range(start, end) {
+    return new Array(end - start + 1).fill(null).map((_, idx) => start + idx)
 }
-
-console.log('done', n, Date.now()-start)
-
-
-
-
-
-
 
 
 
