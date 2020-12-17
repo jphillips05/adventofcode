@@ -1,36 +1,42 @@
 import { Util } from './Util'
 
 // let testData = 
-// `class: 1-3 or 5-7
-// row: 6-11 or 33-44
-// seat: 13-40 or 45-50
+// `class: 0-1 or 4-19
+// row: 0-5 or 8-19
+// seat: 0-13 or 16-19
 
 // your ticket:
-// 7,1,14
+// 11,12,13
 
 // nearby tickets:
-// 7,3,47
-// 40,4,50
-// 55,2,20
-// 38,6,12`
+// 2,3,20
+// 3,9,18
+// 15,1,5
+// 5,14,9`
 
 let testData = Util.ReadFile('/data/Day16.txt', false)
 let data = testData.split('\n\n')
 
-let validRangeVals: Map<string, number[]>
-data[0].split('departure ').forEach(r => {
-    let parts = r.split(':')
-    validRangeVals.set(parts[0], [])
-    
-})
+let allValid = []
+let validRangeVals: Map<string, number[]> = new Map<string, number[]>()
 
-data[0].match(/\d{1,9}-\d{1,9}/ig).forEach(r => {
-    let ra = r.split('-')
-    range(parseInt(ra[0]), parseInt(ra[1])).forEach(c => {
-        if(parseInt(c) && !validRangeVals.includes(parseInt(c))) {
-            validRangeVals.push(parseInt(c))
-        }
+
+data[0].split('\n').forEach(r => {
+    //let c = r.split('departure ')[1]
+    let parts = r.split(':')
+    
+    let rang = []
+    parts[1].match(/\d{1,9}-\d{1,9}/ig).forEach(r => {
+        let ra = r.split('-')
+        range(parseInt(ra[0]), parseInt(ra[1])).forEach(c => {
+            if(parseInt(c) && !rang.includes(parseInt(c))) {
+                rang.push(parseInt(c))
+            }
+        })
     })
+
+    allValid = allValid.concat(rang)
+    validRangeVals.set(parts[0], rang)
 })
 
 let ticketData = {}
@@ -38,20 +44,80 @@ data.slice(1, data.length).forEach(ticket => {
     let d = ticket.split(':\n')
     ticketData[d[0]] = d[1]
         .split('\n')
-        .map(r => r.split(',').reduce((p,c) => !isNaN(parseInt(c)) && p.push(parseInt(c)) && p, []))
+        .map(r => r.split(',')
+        // .reduce((p,c, idx) => {
+        //     if(!isNaN(parseInt(c)) && allValid.includes(parseInt(c))) {  //********************only push when whole array is valid********************
+        //         p.push(parseInt(c))
+        //     } else {
+        //         p.push(0)
+        //     }
+        //     return p
+        // }, [])
+    )
 });
 
-let errArr = 0
-ticketData["nearby tickets"].forEach(r => {
-    for(let i = 0; i < r.length; i++) {
-        if(!validRangeVals.includes(r[i])) {
-            //remove
+//validate tickets then add ours
+ticketData['nearby tickets'] = ticketData['nearby tickets'].reduce((p, c) => {
+    //check each value is valid
+    for(let j = 0; j < c.length; j++) {
+        if(!allValid.includes(parseInt(c[j]))) {
+            return p
+        }
+    }
+    //push array if tru
+    p.push(c)
+    return p
+},[])
+ticketData['nearby tickets'].push(ticketData['your ticket'][0])
+
+
+let notanswer: Map<string, number[]> = new Map<string, number[]>()
+
+//validate
+validRangeVals.forEach((r, key) => {
+    notanswer.set(key, [])
+    //each col
+    for(let i = 0; i < ticketData['your ticket'][0].length; i++) {
+        //each row in nearby
+        let c = 0
+        for(let j = 0; j < ticketData['nearby tickets'].length; j++) {
+            //if range not include continue
+            if(!r.includes(parseInt(ticketData['nearby tickets'][j][i]))) {
+                if(!notanswer.get(key).includes(i)) notanswer.get(key).push(i)
+            }
         }
     }
 })
 
+let possibilities = range(0,19)
+let answer: Map<string,number> = new Map<string, number>()
+let sorted = new Map([...notanswer.entries()].sort((a,b) => b[1].length - a[1].length))
+sorted.forEach((r, key) => {
+    for(let i = 0; i < possibilities.length; i++) {
+        if(r.indexOf(possibilities[i]) === -1) {
+            answer.set(key, possibilities[i])
+            possibilities.splice(i, 1)
+        }
+    }
+})
 
-console.log(errArr)
+console.log([...answer.entries()].filter(r => r[0].indexOf('departure') > -1).reduce((p,c) => ticketData['your ticket'][0][c[1]]*p, 1))
+
+//ignore invalid
+
+function isVaid(number:number, ranges:Map<string, number[]>) {
+    ranges.forEach(range => {
+        if(!range.includes(number)) return false
+    });
+
+    return true
+}
+
+// for(let a of answer) {
+//     answerInt = answerInt*parseInt(ticketData['your ticket'][0][a])
+// }
+
+// console.log(answerInt)
 
 function range(start, end) {
     return new Array(end - start + 1).fill(null).map((_, idx) => start + idx)
@@ -64,7 +130,6 @@ function range(start, end) {
 
 
 // let testData = 
-// `0
 // 1789,37,47,1889`
 
 // let testData = Util.ReadFile('/Data/Day13.txt', false)
@@ -83,37 +148,37 @@ function range(start, end) {
 
 // console.log(`finish => ${t}`)
 
-function checkNextBus(start, busIndex, busList) {
-    if(!busList[busIndex]) return false //if does not exist retur false
+// function checkNextBus(start, busIndex, busList) {
+//     if(!busList[busIndex]) return false //if does not exist retur false
 
-    //break
-    if(start%busList[busIndex] === 0 && busIndex === busList.length -1) return true
+//     //break
+//     if(start%busList[busIndex] === 0 && busIndex === busList.length -1) return true
 
-    if(start%busList[busIndex] === 0 || busList[busIndex] === 'x') {
-        return checkNextBus(start+1, busIndex+1, busList)
-    }
+//     if(start%busList[busIndex] === 0 || busList[busIndex] === 'x') {
+//         return checkNextBus(start+1, busIndex+1, busList)
+//     }
 
-    //all false
-    return false
-}
+//     //all false
+//     return false
+// }
 
-//runBus(start, validBus)
-function runBus(start, validBus) {
-    let run = true
-    let time = start
-    while(run) {
-        time ++
-        for(let i = 0; i < validBus.length; i++) {
-            if(time%validBus[i]===0) {
-                console.log(`finish => ${(time-start)*validBus[i]}`)
-                run = false
-                break
-            }
-        }
+// //runBus(start, validBus)
+// function runBus(start, validBus) {
+//     let run = true
+//     let time = start
+//     while(run) {
+//         time ++
+//         for(let i = 0; i < validBus.length; i++) {
+//             if(time%validBus[i]===0) {
+//                 console.log(`finish => ${(time-start)*validBus[i]}`)
+//                 run = false
+//                 break
+//             }
+//         }
 
-    }
+//     }
 
-}
+// }
 
 // let testData = 
 // `light red bags contain 1 bright white bag, 2 muted yellow bags.
